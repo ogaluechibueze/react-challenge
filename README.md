@@ -26,11 +26,11 @@ Using useState for simple state management
 
 
 
-🔗 6. Routing (Multi-Page Navigation)
+🔗 5. Routing (Multi-Page Navigation)
 using React Router i was able navigate through my pages
 Styling with CSS, Tailwind, or styled-components
 
-✅ 8. Test Your App
+✅ 6. Test Your App
 tested my app and it worked perfectly
 
 conclusion: 
