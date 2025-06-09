@@ -24,6 +24,8 @@ const Hero = () => {
     setSelectedId(id);
   };
 
+  const selectedItem = dataProduct.find((item) => item.id === selectedId);
+
   return (
     <main className="p-4">
       <div className="text-center mb-8">
@@ -64,6 +66,30 @@ const Hero = () => {
           </Card>
         ))}
       </div>
+
+      {/* Selected Item Details */}
+      {selectedItem && (
+        <div className="mt-10 max-w-3xl mx-auto">
+          <Card className="bg-gray-50 shadow-lg border border-dashed border-gray-300">
+            <CardHeader className="text-center">
+              <h2 className="text-xl font-bold text-blue-700">Selected Skip Details</h2>
+            </CardHeader>
+            <CardContent className="flex flex-col md:flex-row items-center gap-6">
+              <img src={selectedItem.img} alt="Selected Skip" className="h-40 w-40 object-contain" />
+              <div className="space-y-2">
+                <p><strong>Size:</strong> {selectedItem.size} Yard</p>
+                <p><strong>Hire Period:</strong> {selectedItem.hire_period_days} Days</p>
+                <p><strong>Price:</strong> £{selectedItem.price_before_vat} + VAT</p>
+              </div>
+            </CardContent>
+            <CardFooter className="flex justify-center">
+              <Button className="w-1/2" variant="default">
+                Proceed to Checkout
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+      )}
     </main>
   );
 };
