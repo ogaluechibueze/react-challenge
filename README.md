@@ -33,6 +33,4 @@ Styling with CSS, Tailwind, or styled-components
 ✅ 6. Test Your App
 tested my app and it worked perfectly
 
-conclusion: 
-i received the email yesterday because i was having issues logging into my mail and the deadline is today and i have to work hard to meet up with the deadline
-will love to produce more better UI/UX in the application
+
