@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2, ArrowRight, X } from "lucide-react";
 
 const dataProduct = [
   { id: 17933, size: 4, img: "./4-yarder-skip.jpg", hire_period_days: 14, price_before_vat: 278 },
@@ -22,6 +22,10 @@ const Hero = () => {
 
   const handleSelect = (id) => {
     setSelectedId(id);
+  };
+
+  const handleClose = () => {
+    setSelectedId(null);
   };
 
   const selectedItem = dataProduct.find((item) => item.id === selectedId);
@@ -67,24 +71,39 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* Selected Item Details */}
+      {/* Popup Modal for Selected Item */}
       {selectedItem && (
-        <div className="mt-10 max-w-3xl mx-auto">
-          <Card className="bg-gray-50 shadow-lg border border-dashed border-gray-300">
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center p-4">
+          <Card className="bg-white max-w-md w-full relative">
+            <Button
+              onClick={handleClose}
+              className="absolute top-2 right-2 p-2 rounded-full"
+              variant="ghost"
+              size="icon"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+
             <CardHeader className="text-center">
               <h2 className="text-xl font-bold text-blue-700">Selected Skip Details</h2>
+              <span className="text-xl font-bold text-blue-700">Imagery and information shown throughout this website may not reflect the exact shape or size specification, colours may vary, options and/or accessories may be featured at additional cost.</span>
             </CardHeader>
-            <CardContent className="flex flex-col md:flex-row items-center gap-6">
-              <img src={selectedItem.img} alt="Selected Skip" className="h-40 w-40 object-contain" />
-              <div className="space-y-2">
+
+            <CardContent className="flex flex-col items-center gap-4">
+              <img src={selectedItem.img} alt="Selected Skip" className="h-40 object-contain" />
+              <div className="space-y-2 text-center">
                 <p><strong>Size:</strong> {selectedItem.size} Yard</p>
                 <p><strong>Hire Period:</strong> {selectedItem.hire_period_days} Days</p>
                 <p><strong>Price:</strong> £{selectedItem.price_before_vat} + VAT</p>
               </div>
             </CardContent>
+
             <CardFooter className="flex justify-center">
-              <Button className="w-1/2" variant="default">
+              <Button className="w-full" variant="destructive">
                 Proceed to Checkout
+              </Button>
+              <Button className="w-full" variant="default">
+                Back
               </Button>
             </CardFooter>
           </Card>
