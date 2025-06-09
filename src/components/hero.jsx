@@ -1,7 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "./ui/card";
 import { Button } from "./ui/button";
 import { CheckCircle2, ArrowRight, X } from "lucide-react";
 
@@ -19,16 +24,18 @@ const dataProduct = [
 
 const Hero = () => {
   const [selectedId, setSelectedId] = useState(null);
+  const [showMessageBox, setShowMessageBox] = useState(false);
 
   const handleSelect = (id) => {
     setSelectedId(id);
-  };
-
-  const handleClose = () => {
-    setSelectedId(null);
+    setShowMessageBox(true);
   };
 
   const selectedItem = dataProduct.find((item) => item.id === selectedId);
+
+  const closeMessageBox = () => {
+    setShowMessageBox(false);
+  };
 
   return (
     <main className="p-4">
@@ -41,7 +48,11 @@ const Hero = () => {
         {dataProduct.map((item) => (
           <Card key={item.id} className="bg-white shadow hover:shadow-xl transition-shadow">
             <CardHeader className="flex justify-center">
-              <img src={item.img} alt={`${item.size}-yard skip`} className="h-40 object-contain" />
+              <img
+                src={item.img}
+                alt={`${item.size}-yard skip`}
+                className="h-40 object-contain"
+              />
             </CardHeader>
 
             <CardContent className="text-center">
@@ -71,27 +82,20 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* Popup Modal for Selected Item */}
-      {selectedItem && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center p-4">
-          <Card className="bg-white max-w-md w-full relative">
-            <Button
-              onClick={handleClose}
-              className="absolute top-2 right-2 p-2 rounded-full"
-              variant="ghost"
-              size="icon"
-            >
-              <X className="h-5 w-5" />
-            </Button>
-
-            <CardHeader className="text-center">
-              <h2 className="text-xl font-bold text-blue-700">Selected Skip Details</h2>
-              <span className="text-xl font-bold text-blue-700">Imagery and information shown throughout this website may not reflect the exact shape or size specification, colours may vary, options and/or accessories may be featured at additional cost.</span>
+      {/* Message Box Popup */}
+      {showMessageBox && selectedItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <Card className="bg-white w-full max-w-md mx-auto shadow-xl relative">
+            <CardHeader className="flex justify-between items-center">
+              <h2 className="text-lg font-bold text-blue-700">Selected Skip Details</h2>
+              <button onClick={closeMessageBox}>
+                <X className="w-5 h-5 text-gray-500 hover:text-red-500" />
+              </button>
             </CardHeader>
 
             <CardContent className="flex flex-col items-center gap-4">
-              <img src={selectedItem.img} alt="Selected Skip" className="h-40 object-contain" />
-              <div className="space-y-2 text-center">
+              <img src={selectedItem.img} alt="Selected Skip" className="h-40 w-40 object-contain" />
+              <div className="space-y-1 text-sm text-center">
                 <p><strong>Size:</strong> {selectedItem.size} Yard</p>
                 <p><strong>Hire Period:</strong> {selectedItem.hire_period_days} Days</p>
                 <p><strong>Price:</strong> £{selectedItem.price_before_vat} + VAT</p>
@@ -99,12 +103,7 @@ const Hero = () => {
             </CardContent>
 
             <CardFooter className="flex justify-center">
-              <Button className="w-full" variant="destructive">
-                Proceed to Checkout
-              </Button>
-              <Button className="w-full" variant="default">
-                Back
-              </Button>
+              <Button className="w-1/2">Proceed to Checkout</Button>
             </CardFooter>
           </Card>
         </div>
